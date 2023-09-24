@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import BoardController from "./Controllers/TBoardController.class.js";
 import ListController from "./Controllers/TListController.class.js";
 import SubtaskController from "./Controllers/TSubtaskController.class.js";
+import TaskController from "./Controllers/TTaskController.class.js";
 
 const app = express();
 app.use(express.json());
@@ -21,6 +22,9 @@ app.get(
 
 app.post("/lists", ListController.createOne);
 app.get("/lists", ListController.getAll);
+
+app.get("/tasks/:taskId/subtasks", TaskController.getTaskAndAllTheirSubtasks);
+app.post("/tasks", TaskController.createOne);
 
 app.put("/subtasks", SubtaskController.updateOne);
 
