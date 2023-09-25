@@ -1,0 +1,37 @@
+.header {
+  background-color: var(--header-bg);
+  color: #ffffff;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+}
+
+.userContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.iconBell {
+  background: url("../assets/icons/interface/bell.png") center/cover no-repeat;
+}
+
+.iconUser {
+  background: url("../assets/icons/interface/user.png") center/cover no-repeat;
+}
+
+.iconMessage {
+  background: url("../assets/icons/interface/message.png") center/cover
+    no-repeat;
+}
