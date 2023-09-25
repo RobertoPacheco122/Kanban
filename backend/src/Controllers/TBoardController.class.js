@@ -55,10 +55,11 @@ class TBoardController {
         "SELECT id_list FROM lists WHERE lists.id_board = ($1)",
         [boardId]
       );
-      const response = [];
+
+      const result = [];
 
       const fetchAllListsAndTasksFromBoard = async (boardId) => {
-        for (const listItem of listsIds.rows) {
+        for (const [index, listItem] of listsIds.rows.entries()) {
           const { rows } = await pool.query(
             `
             SELECT tasks.id_task, tasks.title AS "task_title", lists.id_list, lists.name AS "list_name"
@@ -68,11 +69,31 @@ class TBoardController {
             WHERE lists.id_list = ($1) AND lists.id_board = ($2)`,
             [listItem.id_list, boardId]
           );
-          response.push(rows);
+          result.push(rows);
         }
       };
 
       await fetchAllListsAndTasksFromBoard(boardId);
+
+      const response = result.reduce((result, currentList) => {
+        if (currentList.length > 0) {
+          const { id_list, list_name } = currentList[0];
+
+          const tasks = currentList.map((task) => ({
+            id_task: task.id_task,
+            task_title: task.task_title,
+          }));
+
+          const listObject = {
+            id_list,
+            list_name,
+            tasks,
+          };
+
+          result.push(listObject);
+        }
+        return result;
+      }, []);
 
       return res.status(200).json(response);
     } catch (error) {
