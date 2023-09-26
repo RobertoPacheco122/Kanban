@@ -1,10 +1,22 @@
 .listContainer {
   background-color: var(--list-bg);
-  border-top: 4px solid #75acfa;
+  border-top: 4px solid #d572ba;
   border-radius: 0.4rem;
   padding: 1rem;
   box-shadow: 0px 3px 7px 1px rgb(190, 190, 190);
   margin-bottom: 1rem;
+}
+
+.listContainer:nth-child(2) {
+  border-top: 4px solid #75acfa;
+}
+
+.listContainer:nth-child(3) {
+  border-top: 4px solid #ffa165;
+}
+
+.listContainer:nth-child(4) {
+  border-top: 4px solid #79d4ae;
 }
 
 .listName {
