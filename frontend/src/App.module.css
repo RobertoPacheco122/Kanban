@@ -8,6 +8,8 @@
   --medium-priority-bg: #80d5dd;
   --high-priority-bg: #d17cd2;
 
+  --primary-font-color: rgb(83, 83, 83);
+
   --font-default: sans-serif;
   --container-pd: 2rem;
 }
@@ -18,7 +20,7 @@
 
 body {
   font-family: var(--font-default);
-  color: rgb(83, 83, 83);
+  color: var(--primary-font-color);
 }
 
 .container1 {
