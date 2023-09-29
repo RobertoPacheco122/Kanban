@@ -1,0 +1,153 @@
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modalContent {
+  padding: 2rem;
+  background-color: #ffffff;
+  max-width: 50%;
+  margin: 10vh auto;
+  border-radius: 0.7rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.iconBigCross:hover {
+  cursor: pointer;
+}
+
+.title {
+  margin-bottom: 1.5rem;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+}
+
+.infosContainer {
+  border-bottom: 2px solid #cfcfcf;
+  margin-bottom: 1rem;
+}
+
+.infoContainer {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.infoIconContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.responsableContainer {
+  background-color: #f5f5f5;
+  display: flex;
+  padding: 0.3rem;
+  border-radius: 1rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.responsableImage {
+  display: block;
+  width: 22px;
+  height: 22px;
+  background: url("../../assets/icons/interface/user_test.webp") center/cover
+    no-repeat;
+  border-radius: 50%;
+}
+
+.tagName {
+  padding: 0.3rem;
+  background-color: #daf3fe;
+  border-radius: 1rem;
+  font-size: 0.9rem;
+  color: #0d536c;
+}
+
+.infoInput {
+  padding: 0.3rem;
+  border: 1px solid #cfcfcf;
+  border-radius: 0.4rem;
+}
+
+.infosSubtask > .infoIconContainer {
+  margin-bottom: 1rem;
+}
+
+.subtaskContainer {
+  margin-bottom: 1rem;
+}
+
+.subtaskContainer:last-child {
+  margin-bottom: 0;
+}
+
+input {
+  margin: 0;
+  margin-right: 0.5rem;
+}
+
+.icon {
+  display: block;
+  width: 17px;
+  height: 17px;
+  background: center/cover no-repeat;
+  opacity: 0.7;
+}
+
+.iconBigCross {
+  background-image: url("../../assets/icons/interface/big_cross.png");
+}
+
+.iconResponsable {
+  background-image: url("../../assets/icons/interface/users.png");
+}
+
+.iconTags {
+  background-image: url("../../assets/icons/interface/tags.png");
+}
+
+.iconPriority {
+  background-image: url("../../assets/icons/interface/tags.png");
+}
+
+.iconCalendar {
+  background-image: url("../../assets/icons/interface/calendar.png");
+}
+
+.iconList {
+  background-image: url("../../assets/icons/interface/list.png");
+}
+
+.iconSubtask {
+  background-image: url("../../assets/icons/interface/subtask.png");
+}
+
+.slideDown {
+  animation: slideDownAnimation 0.3s;
+}
+
+@keyframes slideDownAnimation {
+  from {
+    transform: translateY(-20%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
