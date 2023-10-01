@@ -112,10 +112,21 @@ const TaskInformations = ({
   const { endpoint } = LIST_GET();
   const { data } = useFetch<List[]>(endpoint);
 
-  const handlePriorityChange = ({
-    target,
-  }: React.ChangeEvent<HTMLSelectElement>) => {
-    setTaskPriority(target.value as Priority);
+  const handlePriorityChange = async (
+    target: EventTarget & HTMLSelectElement,
+    id_task: number
+  ) => {
+    const newPriorityValue = target.value;
+    setTaskPriority(newPriorityValue as Priority);
+    const { endpoint, options } = TASKS_PUT({
+      taskId: id_task,
+      newPriorityValue,
+      action: "updatePriority",
+    });
+
+    const updateResponse = await fetch(endpoint, options);
+    if (updateResponse.status != 204)
+      console.log("Ocorreu um erro ao atualizar a Task");
   };
 
   const handleListChange = async (
@@ -127,12 +138,14 @@ const TaskInformations = ({
     const { endpoint, options } = TASKS_PUT({
       taskId: id_task,
       newListId: +target.value,
+      action: "updateList",
     });
 
     const updateResponse = await fetch(endpoint, options);
     if (updateResponse.status != 204)
       console.log("Ocorreu um erro ao atualizar a lista");
   };
+
   return (
     <section className={styles.infosContainer}>
       <p className={styles.subtitle}>{description}</p>
@@ -182,7 +195,7 @@ const TaskInformations = ({
         </div>
         <div>
           <select
-            onChange={handlePriorityChange}
+            onChange={({ target }) => handlePriorityChange(target, id_task)}
             value={taskPriority}
             name="priority"
             id="priority"
