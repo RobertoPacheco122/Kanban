@@ -1,8 +1,10 @@
 import React from "react";
-import styles from "./Board.module.css";
 import useFetch from "../Hooks/useFetch";
 import List from "./List";
 import { BOARDS_LISTS_TASKS_GET } from "../../api";
+import { Priority } from "./Modal/ModalViewTask";
+
+import styles from "./Board.module.css";
 
 interface IList {
   id_list: number;
@@ -13,6 +15,8 @@ interface IList {
 interface Task {
   id_task: number;
   task_title: string;
+  task_description: string;
+  task_priority: Priority;
 }
 
 const Board = () => {
