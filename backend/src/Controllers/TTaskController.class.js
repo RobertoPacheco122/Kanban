@@ -39,21 +39,61 @@ class TTaskController {
     }
   }
 
+  async updateOne(req, res) {
+    try {
+      const { taskId, newListId } = req.body;
+      const updateSql = await pool.query(
+        `
+        UPDATE tasks SET id_list = ($1) WHERE id_task = ($2)
+      `,
+        [newListId, taskId]
+      );
+
+      return res.status(204);
+    } catch (error) {
+      return res.status(400).json({ errorMessage: error });
+    }
+  }
+
   async getTaskAndAllTheirSubtasks(req, res) {
     try {
       const taskId = req.params.taskId;
       const taskData = await pool.query(
-        "SELECT title, description FROM tasks WHERE tasks.id_task = ($1)",
+        "SELECT title, description, priority, due_date FROM tasks WHERE tasks.id_task = ($1) and is_deleted = false",
         [taskId]
       );
       const subtasksData = await pool.query(
         "SELECT id_subtask, description, done FROM subtasks WHERE subtasks.id_task = ($1)",
         [taskId]
       );
+      const tagsData = await pool.query(
+        "SELECT tags.id_tag, tags.name, tags.color_hexa FROM tags INNER JOIN tasks_tags ON tags.id_tag = tasks_tags.id_tag WHERE tasks_tags.id_task = ($1)",
+        [taskId]
+      );
+
+      const responsablesData = await pool.query(
+        `
+        SELECT users.id_user, users.username
+        FROM users INNER JOIN tasks_responsables
+        ON users.id_user = tasks_responsables.id_user
+        WHERE tasks_responsables.id_task = ($1);
+      `,
+        [taskId]
+      );
+
+      let dueData = taskData.rows[0].due_date
+        ? new Intl.DateTimeFormat("pt-BR", {
+            timeZone: "UTC",
+          }).format(new Date(taskData.rows[0].due_date))
+        : null;
 
       const response = {
         title: taskData.rows[0].title,
         description: taskData.rows[0].description,
+        priority: taskData.rows[0].priority,
+        due_date: dueData,
+        tags: tagsData.rows,
+        responsables: responsablesData.rows,
         subtasks: subtasksData.rows,
       };
 
