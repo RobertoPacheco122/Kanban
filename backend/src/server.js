@@ -25,6 +25,7 @@ app.get("/lists", ListController.getAll);
 
 app.get("/tasks/:taskId/subtasks", TaskController.getTaskAndAllTheirSubtasks);
 app.post("/tasks", TaskController.createOne);
+app.put("/tasks", TaskController.updateOne);
 
 app.put("/subtasks", SubtaskController.updateOne);
 

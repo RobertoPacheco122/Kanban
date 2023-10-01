@@ -44,6 +44,19 @@ export function TASK_POST(body) {
   };
 }
 
+export function TASKS_PUT(body) {
+  return {
+    endpoint: API_URL + "/tasks",
+    options: {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    },
+  };
+}
+
 export function LIST_POST(body) {
   return {
     endpoint: API_URL + "/lists",

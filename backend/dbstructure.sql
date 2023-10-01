@@ -21,8 +21,8 @@ CREATE TABLE tasks (
 	FOREIGN KEY (id_list) REFERENCES lists (id_list),
   is_deleted BOOLEAN DEFAULT false,
   priority TEXT CHECK (priority IN ('Low Priority', 'Mid Priority', 'High Priority')),
-  created_at TIMESTAMP NOT NULL,
-  due_date TIMESTAMP NOT NULL
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  due_date TIMESTAMP
 );
 
 create table tags (

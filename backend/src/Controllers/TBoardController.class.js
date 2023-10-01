@@ -62,7 +62,7 @@ class TBoardController {
         for (const [index, listItem] of listsIds.rows.entries()) {
           const { rows } = await pool.query(
             `
-            SELECT tasks.id_task, tasks.title AS "task_title", lists.id_list, lists.name AS "list_name"
+            SELECT tasks.id_task, tasks.description, tasks.priority, tasks.title AS "task_title", lists.id_list, lists.name AS "list_name"
             FROM tasks
             INNER JOIN lists
             ON tasks.id_list = lists.id_list
@@ -82,6 +82,8 @@ class TBoardController {
           const tasks = currentList.map((task) => ({
             id_task: task.id_task,
             task_title: task.task_title,
+            task_description: task.description,
+            task_priority: task.priority,
           }));
 
           const listObject = {
