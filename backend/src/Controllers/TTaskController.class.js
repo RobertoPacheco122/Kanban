@@ -41,13 +41,22 @@ class TTaskController {
 
   async updateOne(req, res) {
     try {
-      const { taskId, newListId } = req.body;
-      const updateSql = await pool.query(
-        `
-        UPDATE tasks SET id_list = ($1) WHERE id_task = ($2)
-      `,
-        [newListId, taskId]
-      );
+      const requestParams = req.body;
+      const updateTaskActions = {
+        updatePriority: async () =>
+          await pool.query(
+            `UPDATE tasks SET priority = ($1) WHERE id_task = ($2) RETURNING *`,
+            [requestParams?.newPriorityValue, requestParams?.taskId]
+          ),
+        updateList: async () =>
+          await pool.query(
+            `UPDATE tasks SET id_list = ($1) WHERE id_task = ($2) RETURNING *`,
+            [requestParams?.newListId, requestParams?.taskId]
+          ),
+      };
+
+      const { rows } = await updateTaskActions[requestParams?.action]?.();
+      if (!rows[0]) throw new Error("Ocorreu um erro ao realizar o update");
 
       return res.status(204);
     } catch (error) {
