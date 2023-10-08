@@ -1,15 +1,16 @@
 import React from "react";
-import Header from "./Components/Header";
 import Board from "./Components/Board";
+import { BoardContextProvider } from "./Context/BoardContext";
 
 import "./App.module.css";
 
 const App = () => {
   return (
-    <div>
-      <Header />
-      <Board />
-    </div>
+    <BoardContextProvider>
+      <div>
+        <Board />
+      </div>
+    </BoardContextProvider>
   );
 };
 
