@@ -18,8 +18,8 @@
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto;
 }
 
 .iconBigCross:hover {
@@ -27,14 +27,34 @@
 }
 
 .title {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
   font-size: 1.7rem;
   font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: 0.4rem;
+  padding: 0.5rem 0px;
+}
+
+.title:hover,
+.subtitle:hover {
+  border: 1px solid #cfcfcf;
+  border-radius: 0.4rem;
+}
+
+.title:focus-visible,
+.subtitle:focus-visible {
+  outline: 1px solid #cfcfcf;
 }
 
 .subtitle {
   font-size: 1.3rem;
-  margin-bottom: 1.5rem;
+  border-radius: 0.4rem;
+  border: 1px solid transparent;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  resize: none;
 }
 
 .infosContainer {
