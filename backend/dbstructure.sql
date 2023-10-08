@@ -15,21 +15,21 @@ CREATE TABLE lists (
 CREATE TABLE tasks (
 	id_task SERIAL PRIMARY KEY,
 	title TEXT NOT NULL,
-	description TEXT NOT NULL,
+	description TEXT,
 	done BOOLEAN NOT NULL,
 	id_list INT NOT NULL,
-	FOREIGN KEY (id_list) REFERENCES lists (id_list),
-  is_deleted BOOLEAN DEFAULT false,
   priority TEXT CHECK (priority IN ('Low Priority', 'Mid Priority', 'High Priority')),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  due_date TIMESTAMP
+  is_deleted BOOLEAN DEFAULT false,
+  created_at DATE DEFAULT CURRENT_DATE,
+  due_date DATE
+	FOREIGN KEY (id_list) REFERENCES lists (id_list),
 );
 
 create table tags (
   id_tag SERIAL PRIMARY KEY,
   name VARCHAR(30),
   color_hexa VARCHAR(7)
-)
+);
 
 CREATE TABLE tasks_responsables (
   id_user INT NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE tasks_tags (
   id_tag INT NOT NULL,
   FOREIGN KEY (id_task) REFERENCES tasks (id_task),
   FOREIGN KEY (id_tag) REFERENCES tags (id_tag)
-)
+);
 
 CREATE TABLE subtasks (
 	id_subtask SERIAL PRIMARY KEY,
