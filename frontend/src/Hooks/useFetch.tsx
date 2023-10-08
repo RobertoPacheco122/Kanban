@@ -1,6 +1,12 @@
 import React from "react";
 
-function useFetch<T>(url: RequestInfo | URL, options?: RequestInit) {
+type K = number | string;
+
+function useFetch<T>(
+  url: RequestInfo | URL,
+  dependencies: Array<K>,
+  options?: RequestInit
+) {
   const [data, setData] = React.useState<T | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -34,7 +40,7 @@ function useFetch<T>(url: RequestInfo | URL, options?: RequestInit) {
     return () => {
       controller.abort();
     };
-  }, [url]);
+  }, [url, ...dependencies]);
 
   return { data, loading, error };
 }
