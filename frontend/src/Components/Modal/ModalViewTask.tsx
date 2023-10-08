@@ -10,7 +10,7 @@ interface ITask {
   title: string;
   description: string;
   priority: Priority;
-  due_date: Date;
+  due_date: string;
   responsables: Responsable[];
   tags: Tag[];
   subtasks: ISubtask[];
@@ -45,11 +45,30 @@ const ModalViewTask = ({
   setIsModalOpen,
 }: ModalViewTaskProps) => {
   const { endpoint } = TASK_AND_THEIR_SUBTASKS_GET(id_task);
-  const { data } = useFetch<ITask>(endpoint);
+  const { data } = useFetch<ITask>(endpoint, [endpoint]);
+  const [taskTitle, setTaskTitle] = React.useState(data?.title || "");
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const handleTitleChange = (target: EventTarget & HTMLInputElement) => {
+    setTaskTitle(target.value);
+  };
+
+  const handleTitleBlur = async () => {
+    const { endpoint, options } = TASKS_PUT({
+      taskId: id_task,
+      newTitle: taskTitle,
+      action: "updateTitle",
+    });
+
+    const updateResponse = await fetch(endpoint, options);
+    if (updateResponse.status != 204)
+      console.log("Ocorreu um erro ao atualizar o title");
+  };
+
+  React.useEffect(() => setTaskTitle(data?.title || ""), [data]);
 
   return (
     <div className={styles.modal}>
@@ -57,7 +76,13 @@ const ModalViewTask = ({
         {data && (
           <div>
             <div className={styles.header}>
-              <h1 className={styles.title}>{data.title}</h1>
+              <input
+                value={taskTitle}
+                onChange={({ target }) => handleTitleChange(target)}
+                onBlur={handleTitleBlur}
+                type="text"
+                className={styles.title}
+              />
               <i
                 onClick={() => closeModal()}
                 className={`${styles.icon} ${styles.iconBigCross}`}
@@ -93,7 +118,7 @@ interface TaskInformationsProps {
   tags: Tag[];
   priority: Priority;
   list_id: number;
-  date: Date | null;
+  date: string | null;
   id_task: number;
 }
 
@@ -108,9 +133,29 @@ const TaskInformations = ({
 }: TaskInformationsProps) => {
   const [taskPriority, setTaskPriority] = React.useState<Priority>(priority);
   const [taskList, setTaskList] = React.useState(list_id);
+  const [taskDescription, setTaskDescription] = React.useState(description);
+  const [dueDate, setDueDate] = React.useState(date);
 
   const { endpoint } = LIST_GET();
-  const { data } = useFetch<List[]>(endpoint);
+  const { data } = useFetch<List[]>(endpoint, [endpoint]);
+
+  const handleDescriptionChange = async (
+    target: EventTarget & HTMLTextAreaElement
+  ) => {
+    setTaskDescription(target.value);
+  };
+
+  const handleDescriptionBlur = async () => {
+    const { endpoint, options } = TASKS_PUT({
+      taskId: id_task,
+      newDescription: taskDescription,
+      action: "updateDescription",
+    });
+
+    const updateResponse = await fetch(endpoint, options);
+    if (updateResponse.status != 204)
+      console.log("Ocorreu um erro ao atualizar a Description");
+  };
 
   const handlePriorityChange = async (
     target: EventTarget & HTMLSelectElement,
@@ -143,16 +188,36 @@ const TaskInformations = ({
 
     const updateResponse = await fetch(endpoint, options);
     if (updateResponse.status != 204)
-      console.log("Ocorreu um erro ao atualizar a lista");
+      console.log("Ocorreu um erro ao atualizar a List");
+  };
+
+  const handleDateChange = async (target: EventTarget & HTMLInputElement) => {
+    const date = target.value;
+    setDueDate(date);
+
+    const { endpoint, options } = TASKS_PUT({
+      taskId: id_task,
+      newDueDate: date,
+      action: "updateDueDate",
+    });
+
+    const updateResponse = await fetch(endpoint, options);
+    if (updateResponse.status != 204)
+      console.log("Ocorreu um erro ao atualizar a Due Date");
   };
 
   return (
     <section className={styles.infosContainer}>
-      <p className={styles.subtitle}>{description}</p>
+      <textarea
+        onChange={({ target }) => handleDescriptionChange(target)}
+        onBlur={handleDescriptionBlur}
+        value={taskDescription}
+        className={styles.subtitle}
+      ></textarea>
       <div className={styles.infoContainer}>
         <div className={styles.infoIconContainer}>
           <i className={`${styles.icon} ${styles.iconResponsable}`}></i>
-          <span className={styles.infoName}>Responsable</span>
+          <span className={styles.infoName}>Responsables</span>
         </div>
         <div>
           <ul className={styles.responsablesList}>
@@ -235,10 +300,17 @@ const TaskInformations = ({
       <div className={styles.infoContainer}>
         <div className={styles.infoIconContainer}>
           <i className={`${styles.icon} ${styles.iconCalendar}`}></i>
-          <span className={styles.infoName}>Date</span>
+          <span className={styles.infoName}>Due Date</span>
         </div>
         <div>
-          <span>{date ? date.toString() : "Not defined"}</span>
+          <input
+            onChange={({ target }) => handleDateChange(target)}
+            value={dueDate ? new Date(dueDate).toISOString().split("T")[0] : ""}
+            type="date"
+            name="date"
+            id="date"
+            className={styles.infoInput}
+          />
         </div>
       </div>
     </section>

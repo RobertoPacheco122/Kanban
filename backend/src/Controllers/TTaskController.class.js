@@ -53,6 +53,21 @@ class TTaskController {
             `UPDATE tasks SET id_list = ($1) WHERE id_task = ($2) RETURNING *`,
             [requestParams?.newListId, requestParams?.taskId]
           ),
+        updateTitle: async () =>
+          await pool.query(
+            `UPDATE tasks SET title = ($1) WHERE id_task = ($2) RETURNING *`,
+            [requestParams?.newTitle, requestParams?.taskId]
+          ),
+        updateDescription: async () =>
+          await pool.query(
+            `UPDATE tasks SET description = ($1) WHERE id_task = ($2) RETURNING *`,
+            [requestParams?.newDescription, requestParams?.taskId]
+          ),
+        updateDueDate: async () =>
+          await pool.query(
+            `UPDATE tasks SET due_date = ($1) WHERE id_task = ($2) RETURNING *`,
+            [requestParams?.newDueDate, requestParams?.taskId]
+          ),
       };
 
       const { rows } = await updateTaskActions[requestParams?.action]?.();
@@ -68,7 +83,7 @@ class TTaskController {
     try {
       const taskId = req.params.taskId;
       const taskData = await pool.query(
-        "SELECT title, description, priority, due_date FROM tasks WHERE tasks.id_task = ($1) and is_deleted = false",
+        "SELECT title, description, priority, due_date FROM tasks WHERE tasks.id_task = ($1) AND is_deleted = false",
         [taskId]
       );
       const subtasksData = await pool.query(
@@ -79,7 +94,6 @@ class TTaskController {
         "SELECT tags.id_tag, tags.name, tags.color_hexa FROM tags INNER JOIN tasks_tags ON tags.id_tag = tasks_tags.id_tag WHERE tasks_tags.id_task = ($1)",
         [taskId]
       );
-
       const responsablesData = await pool.query(
         `
         SELECT users.id_user, users.username
@@ -90,11 +104,13 @@ class TTaskController {
         [taskId]
       );
 
-      let dueData = taskData.rows[0].due_date
-        ? new Intl.DateTimeFormat("pt-BR", {
-            timeZone: "UTC",
-          }).format(new Date(taskData.rows[0].due_date))
-        : null;
+      let dueData = taskData.rows[0].due_date;
+
+      dueData
+        ? (dueData = `${dueData.getFullYear()}-${
+            dueData.getMonth() + 1
+          }-${dueData.getDate()}`)
+        : (dueData = null);
 
       const response = {
         title: taskData.rows[0].title,
