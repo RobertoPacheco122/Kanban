@@ -52,6 +52,7 @@
 
 .taskDescription {
   margin-bottom: 1rem;
+  word-break: break-word;
 }
 
 .icon {

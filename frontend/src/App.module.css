@@ -21,8 +21,13 @@
 body {
   font-family: var(--font-default);
   color: var(--primary-font-color);
+  overflow: hidden;
 }
 
 .container1 {
   padding: 2rem;
+}
+
+textarea {
+  font-family: var(--font-default);
 }
