@@ -5,7 +5,7 @@ interface IBoardService {
   GetSingleBoard(id: number): Promise<IBoard | null>;
   GetAllBoards(): Promise<IBoard[] | null>;
   GetBoardListsAndTasks(id: number): Promise<IBoardListsAndTasks[]>;
-  AddBoard(board: IBoard): Promise<IBoard | null>;
+  AddBoard(name: string): Promise<IBoard | null>;
   UpdateBoard(id: number, board: IBoard): Promise<IBoard | null>;
   DeleteBoard(id: number): Promise<IBoard | null>;
 }
@@ -49,10 +49,10 @@ class BoardService implements IBoardService {
     return rows;
   }
 
-  public async AddBoard(board: IBoard): Promise<IBoard | null> {
+  public async AddBoard(name: string): Promise<IBoard | null> {
     const { rows } = await this._Database.Query<IBoard>(
       "INSERT INTO boards (name) VALUES ($1) RETURNING *",
-      [board?.name]
+      [name]
     );
     if (!rows) return null;
 
