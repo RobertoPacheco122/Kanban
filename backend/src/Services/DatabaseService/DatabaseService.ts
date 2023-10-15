@@ -18,7 +18,7 @@ class Database {
 
   public async Query<T extends QueryResultRow>(
     sqlCommand: string,
-    parameters?: Array<string | number | boolean>
+    parameters?: Array<string | number | boolean | Date>
   ): Promise<QueryResult<T>> {
     const queryResult = await this.database.query(sqlCommand, parameters);
 
