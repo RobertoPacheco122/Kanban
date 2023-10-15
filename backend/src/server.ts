@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import BoardController from "./Controllers/Board/BoardController";
+import ListController from "./Controllers/List/ListController";
 
 const app = express();
 app.use(express.json());
@@ -19,10 +20,14 @@ app.get("/boards/:id/lists-tasks", async (req, res) =>
 );
 app.post("/boards", async (req, res) => BoardController.AddBoard(req, res));
 
-/*
-app.post("/lists", ListController.createOne);
-app.get("/lists", ListController.getAll);
+app.get("/lists", async (req, res) => ListController.GetAllLists(req, res));
+app.get("/lists/:id", async (req, res) =>
+  ListController.GetSingleList(req, res)
+);
+app.post("/lists", async (req, res) => ListController.AddList(req, res));
+app.delete("/lists", async (req, res) => ListController.DeleteList(req, res));
 
+/*
 app.get("/tasks/:taskId/subtasks", TaskController.getTaskAndAllTheirSubtasks);
 app.post("/tasks", TaskController.createOne);
 app.put("/tasks", TaskController.updateOne);
