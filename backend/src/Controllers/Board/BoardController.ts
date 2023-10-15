@@ -78,7 +78,6 @@ class BoardController {
 
       return response.status(200).json(boardsListsAndTasks);
     } catch (error) {
-      console.log(error);
       if (error instanceof Error)
         return response.status(400).json({
           message: "Ocorreu um erro ao buscar os Lists e Tasks do Board",
