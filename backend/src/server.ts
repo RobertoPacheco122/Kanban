@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import BoardController from "./Controllers/Board/BoardController";
 import ListController from "./Controllers/List/ListController";
 import TaskController from "./Controllers/Task/TaskController";
+import SubtaskController from "./Controllers/Subtask/SubtaskController";
 
 const app = express();
 app.use(express.json());
@@ -42,7 +43,19 @@ app.get("/tasks/:id/related", async (req, res) =>
 app.put("/tasks", async (req, res) => TaskController.UpdateTask(req, res));
 app.delete("/tasks", async (req, res) => TaskController.DeleteTask(req, res));
 
-/*app.put("/subtasks", SubtaskController.updateOne); */
+//SUBTASK ROUTES
+app.get("/subtasks", async (req, res) =>
+  SubtaskController.GetAllSubtasks(req, res)
+);
+app.get("/subtasks/:id", async (req, res) =>
+  SubtaskController.GetSingleSubtask(req, res)
+);
+app.put("/subtasks", async (req, res) =>
+  SubtaskController.UpdateSubtask(req, res)
+);
+app.delete("/subtasks", async (req, res) =>
+  SubtaskController.DeleteSubtask(req, res)
+);
 
 app.listen(SERVER_PORT, () =>
   console.log("Server listening on port " + SERVER_PORT)
