@@ -1,4 +1,4 @@
-import { ISubtask } from "./Subtasks";
+import { ISubtask } from "./Subtask";
 
 export interface ITask {
   id_task: number;
