@@ -1,5 +1,5 @@
-import { ISubtask } from "../../Models/Subtasks";
-import { ITag } from "../../Models/Tags";
+import { ISubtask } from "../../Models/Subtask";
+import { ITag } from "../../Models/Tag";
 import { ITask } from "../../Models/Task";
 import { IUser } from "../../Models/User";
 import Database from "../DatabaseService/DatabaseService";
