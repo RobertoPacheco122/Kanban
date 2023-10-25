@@ -1,0 +1,32 @@
+.infoContainer {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.infoIconContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.subtaskContainer {
+  margin-bottom: 1rem;
+}
+
+.subtaskContainer:last-child {
+  margin-bottom: 0;
+}
+
+.infosSubtask > .infoIconContainer {
+  margin-bottom: 1rem;
+}
+
+.icon {
+  display: block;
+  width: 17px;
+  height: 17px;
+  background: url("../../../assets/icons/interface/subtask.png") center/cover
+    no-repeat;
+  opacity: 0.7;
+}
