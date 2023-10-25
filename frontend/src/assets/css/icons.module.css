@@ -1,0 +1,27 @@
+.iconBigCross {
+  background-image: url("../../assets/icons/interface/big_cross.png");
+}
+
+.iconResponsable {
+  background-image: url("../../assets/icons/interface/users.png");
+}
+
+.iconTags {
+  background-image: url("../../assets/icons/interface/tags.png");
+}
+
+.iconPriority {
+  background-image: url("../../assets/icons/interface/tags.png");
+}
+
+.iconCalendar {
+  background-image: url("../../assets/icons/interface/calendar.png");
+}
+
+.iconList {
+  background-image: url("../../assets/icons/interface/list.png");
+}
+
+.iconSubtask {
+  background-image: url("../../assets/icons/interface/subtask.png");
+}
