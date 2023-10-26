@@ -24,7 +24,7 @@ export function BOARDS_GET() {
 
 export function TASK_AND_THEIR_SUBTASKS_GET(taskId: number) {
   return {
-    endpoint: `${API_URL}/tasks/${taskId}/subtasks`,
+    endpoint: `${API_URL}/tasks/${taskId}/related`,
     options: {
       method: "GET",
     },
@@ -44,7 +44,20 @@ export function TASK_POST(body) {
   };
 }
 
-export function TASKS_PUT(body) {
+type TasksPutActions =
+  | "updatePriority"
+  | "updateList"
+  | "updateTitle"
+  | "updateDescription"
+  | "updateDueDate";
+
+interface ITasksPut {
+  id: number;
+  action: TasksPutActions;
+  param: string | number | boolean;
+}
+
+export function TASKS_PUT(body: ITasksPut) {
   return {
     endpoint: API_URL + "/tasks",
     options: {
@@ -81,7 +94,7 @@ export function LIST_GET() {
 
 export function BOARDS_LISTS_TASKS_GET(boardId: number) {
   return {
-    endpoint: API_URL + `/boards/${boardId}/lists`,
+    endpoint: API_URL + `/boards/${boardId}/lists-tasks`,
     options: {
       method: "GET",
     },
