@@ -1,0 +1,98 @@
+.title {
+  margin-bottom: 0.5rem;
+  font-size: 1.7rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: 0.4rem;
+  padding: 0.5rem 0px;
+}
+
+.title:hover,
+.subtitle:hover {
+  border: 1px solid #cfcfcf;
+  border-radius: 0.4rem;
+}
+
+.title:focus-visible,
+.subtitle:focus-visible {
+  outline: 1px solid #cfcfcf;
+}
+
+.infosContainer {
+  border-bottom: 2px solid #cfcfcf;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  border-radius: 0.4rem;
+  border: 1px solid transparent;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  resize: none;
+}
+
+.responsablesList {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.responsableContainer {
+  background-color: #f5f5f5;
+  display: grid;
+  padding: 0.3rem;
+  border-radius: 1rem;
+  align-items: center;
+  gap: 0.5rem;
+  grid-template-columns: auto 1fr;
+}
+
+.responsableImage {
+  display: block;
+  width: 22px;
+  height: 22px;
+  background: url("../../assets/icons/interface/user_test.webp") center/cover
+    no-repeat;
+  border-radius: 50%;
+}
+
+.tagsList {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tagName {
+  padding: 0.3rem;
+  border-radius: 0.7rem;
+  font-size: 0.9rem;
+}
+
+.infoInput {
+  padding: 0.3rem;
+  border: 1px solid #cfcfcf;
+  border-radius: 0.4rem;
+}
+
+.infosSubtask > .infoIconContainer {
+  margin-bottom: 1rem;
+}
+
+input {
+  margin: 0;
+  margin-right: 0.5rem;
+}
+
+.slideDown {
+  animation: slideDownAnimation 0.3s;
+}
+
+@keyframes slideDownAnimation {
+  from {
+    transform: translateY(-20%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
