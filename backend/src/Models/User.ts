@@ -1,3 +1,5 @@
+import { ITask } from "./Task";
+
 export interface IUser {
   id_user: number;
   username: string;
@@ -6,4 +8,6 @@ export interface IUser {
   created_at: Date;
   updated_at: Date;
   is_deleted: boolean;
+
+  tasks?: ITask;
 }
