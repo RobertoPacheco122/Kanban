@@ -1,9 +1,12 @@
+import { IBoard } from "./Board";
 import { ITask } from "./Task";
 
 export interface IList {
   id_list: number;
-  id_board: number;
   name: string;
-  tasks?: ITask[];
   is_deleted: boolean;
+
+  id_board: number;
+  board: IBoard;
+  tasks?: ITask[];
 }
