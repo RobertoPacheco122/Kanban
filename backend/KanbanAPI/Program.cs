@@ -2,6 +2,7 @@ global using KanbanAPI.src.Models;
 global using KanbanAPI.src.Data;
 global using KanbanAPI.src.Services;
 global using Microsoft.EntityFrameworkCore;
+using KanbanAPI.src.Repositories.BoardRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IBoardService, BoardService>();
+builder.Services.AddScoped<IBoardRepository, BoardRepository>();
 
 var app = builder.Build();
 
