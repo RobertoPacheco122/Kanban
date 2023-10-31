@@ -2,19 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KanbanAPI.src.Repositories.BoardRepository;
 
 
 namespace KanbanAPI.src.Services {
     public class BoardService : IBoardService {
-        private readonly DataContext _context;
+        private readonly IBoardRepository _boardRepository;
 
-        public BoardService(DataContext context) {
-            _context = context;
+        public BoardService(IBoardRepository boardRepository) {
+            _boardRepository = boardRepository;
         }
 
         async public Task<ServiceResponse<List<Board>>> GetAllBoards() {
             var serviceResponse = new ServiceResponse<List<Board>>();
-            var boardsList = await _context.Boards.ToListAsync();
+            var boardsList = await _boardRepository.GetAll();
 
             if(boardsList is null) {
                 serviceResponse.Success = false;
@@ -28,7 +29,7 @@ namespace KanbanAPI.src.Services {
 
         public async Task<ServiceResponse<Board>> GetSingleBoard(int id) {
             var serviceResponse = new ServiceResponse<Board>();
-            var boardToFind = await _context.Boards.FindAsync(id);
+            var boardToFind = await _boardRepository.GetSingle(id);
 
             if(boardToFind is null) {
                 serviceResponse.Success = false;
