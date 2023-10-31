@@ -1,6 +1,7 @@
 global using KanbanAPI.src.Models;
-using KanbanAPI.src.Data;
-using Microsoft.EntityFrameworkCore;
+global using KanbanAPI.src.Data;
+global using KanbanAPI.src.Services;
+global using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IBoardService, BoardService>();
 
 var app = builder.Build();
 
