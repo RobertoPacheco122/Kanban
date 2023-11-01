@@ -10,22 +10,21 @@ namespace KanbanAPI.src.Controllers {
     [Route("api/[controller]")]
     public class BoardController : ControllerBase {
         private readonly IBoardService _boardService;
-
         public BoardController(IBoardService boardService) {
             _boardService = boardService;
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceResponse<Board>>> GetSingleBoard(int id) {
-            var response = await _boardService.GetSingleBoard(id);
-            if(response.Success == false) return NotFound(response);
-
-            return Ok(response);
         }
 
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<Board>>> GetAllBoards() {
             var response = await _boardService.GetAllBoards();
+            if(response.Success == false) return NotFound(response);
+
+            return Ok(response);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ServiceResponse<Board>>> GetSingleBoard(int id) {
+            var response = await _boardService.GetSingleBoard(id);
             if(response.Success == false) return NotFound(response);
 
             return Ok(response);
