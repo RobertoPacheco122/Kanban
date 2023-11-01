@@ -9,6 +9,7 @@ namespace KanbanAPI.src.Models {
         public string? Name { get; set; }
         public string? Color_Hexa { get; set; }
 
+        [JsonIgnore]
         public List<TaskItem>? TaskItems { get; set;}
     }
 }
