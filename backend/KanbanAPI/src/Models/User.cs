@@ -13,6 +13,7 @@ namespace KanbanAPI.src.Models {
         public DateOnly Due_Date { get; set; }
         public bool Is_Deleted { get; set; }
 
+        [JsonIgnore]
         public List<TaskItem>? TaskItems { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace KanbanAPI.src.Models {
         public bool Is_Deleted { get; set; }
 
         public int TaskItemId { get; set; }
+        [JsonIgnore]
         public TaskItem? TaskItem { get; set; }
     }
 }
