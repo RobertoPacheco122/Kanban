@@ -10,6 +10,7 @@ namespace KanbanAPI.src.Models {
         public bool Is_deleted { get; set; }
 
         public int BoardId { get; set; }
+        [JsonIgnore]
         public Board? Board { get; set; }
         public List<TaskItem>? TaskItems {get; set;}
     }

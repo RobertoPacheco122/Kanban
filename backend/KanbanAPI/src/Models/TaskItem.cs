@@ -15,6 +15,7 @@ namespace KanbanAPI.src.Models {
         public DateOnly Due_Date { get; set; }
 
         public int ListId { get; set; }
+        [JsonIgnore]
         public List? List { get; set; }
         public List<User>? Users { get; set; }
         public List<Tag>? Tags { get; set; }
