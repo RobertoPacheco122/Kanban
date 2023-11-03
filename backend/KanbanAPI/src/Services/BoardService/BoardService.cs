@@ -27,6 +27,20 @@ namespace KanbanAPI.src.Services {
             return serviceResponse;
         }
 
+        public async Task<ServiceResponse<Board>> GetBoardRelatedDetails(int id) {
+            var serviceResponse = new ServiceResponse<Board>();
+            var boardToFind = await _boardRepository.GetlRelatedDetails(id);
+
+            if(boardToFind is null) {
+                serviceResponse.Success = false;
+                serviceResponse.Message = "Board não encontrado";
+            } else serviceResponse.Success = true;
+
+            serviceResponse.Data = boardToFind;
+
+            return serviceResponse;
+        }
+
         public async Task<ServiceResponse<Board>> GetSingleBoard(int id) {
             var serviceResponse = new ServiceResponse<Board>();
             var boardToFind = await _boardRepository.GetSingle(id);
