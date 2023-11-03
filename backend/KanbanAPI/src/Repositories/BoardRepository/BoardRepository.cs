@@ -16,6 +16,16 @@ namespace KanbanAPI.src.Repositories.BoardRepository {
             return queryResult;
         }
 
+        public async Task<Board?> GetlRelatedDetails(int id) {
+            var queryResult = await _context.Boards
+                .Include(board => board.Lists)
+                    .ThenInclude(list => list.TaskItems)
+                        .ThenInclude(list => list.Tags)
+                .FirstOrDefaultAsync(board => board.Id == id);
+
+            return queryResult;
+        }
+
         public async Task<Board?> GetSingle(int id) {
             var queryResult = await _context.Boards.FindAsync(id);
 
