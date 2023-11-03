@@ -22,6 +22,14 @@ namespace KanbanAPI.src.Controllers {
             return Ok(response);
         }
 
+        [HttpGet("{id}/related")]
+        public async Task<ActionResult<ServiceResponse<Board>>> GetBoardRelatedDetails(int id) {
+            var response = await _boardService.GetBoardRelatedDetails(id);
+            if(response.Success == false) return NotFound(response);
+
+            return Ok(response);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ServiceResponse<Board>>> GetSingleBoard(int id) {
             var response = await _boardService.GetSingleBoard(id);
