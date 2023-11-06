@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KanbanAPI.src.DTOs.List;
 using KanbanAPI.src.Repositories.ListRepository;
 
 namespace KanbanAPI.src.Services.ListService {
@@ -36,6 +37,26 @@ namespace KanbanAPI.src.Services.ListService {
 
             serviceResponse.Data = listToFind;
 
+            return serviceResponse;
+        }
+
+        public async Task<ServiceResponse<bool>> UpdateSingleList(ListAddUpdateDto list) {
+            var serviceResponse = new ServiceResponse<bool>();
+
+            try {
+                var listToFind = await _listRepository.GetSingle(list.Id);
+                if(listToFind is null) throw new Exception("List não encontrada");
+
+                var updateList = await _listRepository.UpdateOne(list);
+                if (updateList == false) throw new Exception("Ocorreu um erro ao atualizar a List");
+
+                serviceResponse.Success = true;
+                serviceResponse.Data = updateList;
+            } catch (Exception exception) {
+                serviceResponse.Success = false;
+                serviceResponse.Message = exception.Message;
+            }
+             
             return serviceResponse;
         }
     }
