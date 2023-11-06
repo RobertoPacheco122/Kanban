@@ -19,7 +19,7 @@ namespace KanbanAPI.src.Controllers {
             var response = await _boardService.GetAllBoards();
             if(response.Success == false) return NotFound(response);
 
-            return Ok(response);
+            return Ok(response.Data);
         }
 
         [HttpGet("{id}/related")]
@@ -27,7 +27,7 @@ namespace KanbanAPI.src.Controllers {
             var response = await _boardService.GetBoardRelatedDetails(id);
             if(response.Success == false) return NotFound(response);
 
-            return Ok(response);
+            return Ok(response.Data);
         }
 
         [HttpGet("{id}")]
@@ -35,7 +35,7 @@ namespace KanbanAPI.src.Controllers {
             var response = await _boardService.GetSingleBoard(id);
             if(response.Success == false) return NotFound(response);
 
-            return Ok(response);
+            return Ok(response.Data);
         }
     }
 }
