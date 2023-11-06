@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KanbanAPI.src.DTOs.List;
 using KanbanAPI.src.Services.ListService;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KanbanAPI.src.Controllers {
@@ -15,7 +17,7 @@ namespace KanbanAPI.src.Controllers {
         }
            
         [HttpGet]
-        public async Task<ActionResult<ServiceResponse<List>>> GetAllBoards() {
+        public async Task<ActionResult<ServiceResponse<List>>> GetAllLists() {
             var response = await _listService.GetAllLists();
             if(response.Success == false) return NotFound(response);
 
@@ -23,11 +25,19 @@ namespace KanbanAPI.src.Controllers {
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceResponse<List>>> GetSingleBoard(int id) {
+        public async Task<ActionResult<ServiceResponse<List>>> GetSingleList(int id) {
             var response = await _listService.GetSingleList(id);
             if(response.Success == false) return NotFound(response);
 
             return Ok(response);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<NoContent>>> UpdateSingleList([FromBody] ListAddUpdateDto list) {
+            var response = await _listService.UpdateSingleList(list);
+            if(response.Success == false) return NotFound(response);
+
+            return NoContent();
         }
     }
 }
