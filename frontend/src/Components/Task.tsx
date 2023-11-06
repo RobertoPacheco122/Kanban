@@ -56,7 +56,7 @@ const Task = ({
             }}
             className={styles.taskPriority}
           >
-            {task_priority.split(" ")[0]}
+            {task_priority?.split(" ")[0]}
           </span>
           <i className={styles.iconOptions}></i>
         </div>
