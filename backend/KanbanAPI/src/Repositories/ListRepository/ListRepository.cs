@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KanbanAPI.src.DTOs.List;
 
 namespace KanbanAPI.src.Repositories.ListRepository {
     public class ListRepository : IListRepository {
@@ -20,6 +21,19 @@ namespace KanbanAPI.src.Repositories.ListRepository {
             var queryResult = await _context.Lists.FindAsync(id);
 
             return queryResult;
+        }
+
+        public async Task<bool> UpdateOne(ListAddUpdateDto list){
+            var listToUpdate = await GetSingle(list.Id);
+            if(listToUpdate is null) return false;
+
+            listToUpdate.Name = list.Name;
+            listToUpdate.Is_deleted = list.Is_deleted;
+            listToUpdate.BoardId = list.BoardId;
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }
