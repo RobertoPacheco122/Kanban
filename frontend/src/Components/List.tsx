@@ -1,7 +1,16 @@
 import React from "react";
 import Task from "./Task";
-import { ITask } from "../Context/BoardContext";
+
 import styles from "./List.module.css";
+import { ITask } from "../Context/BoardContext";
+import { LIST_PUT } from "../api/endpoints/list";
+
+/* interface ITask {
+  id_task: number;
+  task_title: string;
+  task_description: string;
+  task_priority: Priority;
+} */
 
 interface ListProps {
   listId: number;
@@ -14,6 +23,24 @@ const List = ({ listId, name, taskItems, boardId }: ListProps) => {
   const [listName, setListName] = React.useState(name);
   const [tasksList, setTasksList] = React.useState(taskItems);
 
+  const handleListNameChange = (target: EventTarget & HTMLInputElement) => {
+    setListName(target.value);
+  };
+
+  const handleListNameBlur = async () => {
+    const { endpoint, options } = LIST_PUT({
+      id: listId,
+      name: listName,
+      is_deleted: false,
+      boardId: boardId,
+    });
+
+    const serverResponse = await fetch(endpoint, options);
+
+    if (serverResponse.status != 204)
+      console.log("Ocorreu um erro ao atualizar a List");
+  };
+
   return (
     <div className={styles.listContainer}>
       <div className={styles.listNameContainer}>
@@ -21,6 +48,8 @@ const List = ({ listId, name, taskItems, boardId }: ListProps) => {
           type="text"
           name="listName"
           value={listName}
+          onChange={({ target }) => handleListNameChange(target)}
+          onBlur={() => handleListNameBlur()}
           className={styles.listName}
         />
         <i className={`${styles.icon} ${styles.iconOptions}`}></i>
