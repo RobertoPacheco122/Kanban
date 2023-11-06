@@ -1,46 +1,45 @@
 import React from "react";
 import Task from "./Task";
-import { Priority } from "./Modal/ModalViewTask";
-
+import { ITask } from "../Context/BoardContext";
 import styles from "./List.module.css";
 
-interface ITask {
-  id_task: number;
-  task_title: string;
-  task_description: string;
-  task_priority: Priority;
-}
-
 interface ListProps {
-  id_list: number;
-  list_name: string;
-  tasks: ITask[];
+  listId: number;
+  name: string;
+  taskItems: ITask[] | undefined;
+  boardId: number;
 }
 
-const List = ({ id_list, list_name, tasks }: ListProps) => {
+const List = ({ listId, name, taskItems, boardId }: ListProps) => {
+  const [listName, setListName] = React.useState(name);
+  const [tasksList, setTasksList] = React.useState(taskItems);
+
   return (
     <div className={styles.listContainer}>
       <div className={styles.listNameContainer}>
-        <h2 className={styles.listName}>{list_name}</h2>
+        <input
+          type="text"
+          name="listName"
+          value={listName}
+          className={styles.listName}
+        />
         <i className={`${styles.icon} ${styles.iconOptions}`}></i>
       </div>
       <ul className={styles.tasksList}>
         <li>
           <button className={styles.addTaskButton}>+ Add New Task</button>
         </li>
-        {tasks &&
-          tasks.map(
-            ({ id_task, task_title, task_description, task_priority }) => (
-              <Task
-                key={id_task}
-                id_task={id_task}
-                task_title={task_title}
-                task_description={task_description}
-                list_id={id_list}
-                task_priority={task_priority}
-              />
-            )
-          )}
+        {tasksList &&
+          tasksList.map(({ id, title, description, priority }) => (
+            <Task
+              key={id}
+              id_task={id}
+              task_title={title}
+              task_description={description}
+              task_priority={priority}
+              list_id={listId}
+            />
+          ))}
       </ul>
     </div>
   );
